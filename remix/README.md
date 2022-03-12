@@ -22,7 +22,10 @@ These are meant to be run in https://remix.ethereum.org/
 - How to call functions of contracts from contract (factory pattern)
 
 ## Payable1.sol (2:26:22)
-- MVP
+- MVP payable
 - Introduction to payable contract
 - Introduction to `msg` keyword
 - Introduction to `require` keyword
+
+## Payable2.sol (3:08:25)
+- Introduction to `balance` keyword
