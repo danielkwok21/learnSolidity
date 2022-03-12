@@ -20,3 +20,9 @@ These are meant to be run in https://remix.ethereum.org/
 
 ### StorageFactory2.sol (2:16:34)
 - How to call functions of contracts from contract (factory pattern)
+
+## Payable1.sol (2:26:22)
+- MVP
+- Introduction to payable contract
+- Introduction to `msg` keyword
+- Introduction to `require` keyword
