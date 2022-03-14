@@ -28,4 +28,6 @@ These are meant to be run in https://remix.ethereum.org/
 - Introduction to `require` keyword
 
 ## Payable2.sol (3:08:25)
-- Introduction to `balance` keyword
+- Introduction to `balance`, `this` keyword
+- Deploying to rinkeby
+- How to fund to & withdraw from contract

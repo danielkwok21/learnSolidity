@@ -5,17 +5,8 @@ pragma solidity >=0.6.6 <0.9.0;
 /*
 How to run this in Remix
 
-1. Go to sidebar > "DEPLOY & RUN TRANSACTIONS"
-2. Click "Deploy" to deploy contract 
-3. Click "fund". This simulates the act of funding an account
-4. Copy address from "ACCOUNT"
-5. Paste address into variable "amountFundedByAddress" to view value. 
-6. Viewed value should be zero
-7. Change "VALUE" to 20 (or any amount > 0)
-8. Repeat step 3 > 5
-9. Viewed value should be 20 (or the amount set in step 7)
+Watch  https://youtu.be/FhGxHqsxQIM
 
-Click "Deploy"
 */
 contract FundMe {
     mapping(address => uint256) public amountFundedByAddress;
@@ -50,5 +41,9 @@ contract FundMe {
     function withdraw() payable public {
         uint256 currentBalanceOfContract = address(this).balance;
         payable(msg.sender).transfer(currentBalanceOfContract);
+    }
+
+    function getCurrentContractBalance() public view returns (uint256){
+        return address(this).balance;
     }
 }
