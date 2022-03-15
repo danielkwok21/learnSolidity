@@ -34,3 +34,6 @@ These are meant to be run in https://remix.ethereum.org/
 
 ## Voting (na)
 - Learning
+
+## Modifier (3:15:53)
+- Introduction to `modifier`
