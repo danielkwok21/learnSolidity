@@ -31,3 +31,6 @@ These are meant to be run in https://remix.ethereum.org/
 - Introduction to `balance`, `this` keyword
 - Deploying to rinkeby
 - How to fund to & withdraw from contract
+
+## Voting (na)
+- Learning
