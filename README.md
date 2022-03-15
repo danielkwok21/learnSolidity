@@ -7,5 +7,9 @@ https://www.youtube.com/watch?v=M576WGiDBdQ&t=3000s&ab_channel=freeCodeCamp.org
 ## File structure
 Contracts are in [./contracts](./contracts). These are the bread and butter of the application.
 
-## How to run
-Files in [./remix](./remix) directory is meant to be run in remix. Refer to the [readme](./remix/README.md) for more information.
+## What're the directories?
+### [./remix](./remix) 
+meant to be run in remix. Refer to the [readme](./remix/README.md) for more information.
+
+### [./python](./python) 
+meant to be run locally via python, web3, ganache. Refer to the [readme](./python/README.md) for more information.
