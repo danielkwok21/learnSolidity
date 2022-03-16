@@ -1,8 +1,11 @@
-# MVP
-Reference video timestamp:  https://youtu.be/M576WGiDBdQ?t=12842
+# Interact with contract
+Reference video timestamp: https://youtu.be/M576WGiDBdQ?t=14944
 
 ## What is this
-MVP from creating a solidity contract, all the way to deploying it to a local chain using Web3.py and Ganache.
+How to interact with a deployed contract using python.
+<br />Introduction to `call()`.
+<br />This code is built on top of [../mvp](../mvp).
+
 
 ## Prerequisites
 ```bash
@@ -16,8 +19,6 @@ $ pip3 install python-dotenv
 $ pip3 install py-solc-x
 
 ```
-
-
 
 ## Getting started
 1. Start ganache locally
@@ -42,5 +43,5 @@ private_key = os.getenv("PRIVATE_KEY")
 $ python3 deploy.py
 ```
 
-4. View created transaction in ganache
-from Ganache > transactions
+4. View terminal
+5. View "CONTRACT CREATION" and "CONTRACT CALL" via Ganache > Transactions
