@@ -1,7 +1,10 @@
 import json
 from web3 import Web3
 from solcx import compile_standard, install_solc
+import os
+from dotenv import load_dotenv
 
+load_dotenv()
 install_solc("0.6.0")
 
 # 1. Read contents of solidity file
@@ -41,16 +44,16 @@ abi = compiled_sol["contracts"]["mvp.sol"]["MVP"]["abi"]
 # 5. Setting up ganache params
 w3 = Web3(Web3.HTTPProvider("http://127.0.0.1:7545"))
 chain_id = 1337
-my_address = "0x53b7C5d245480c8707EEB813Ec5ccb99dF20aDE1"
-private_key = "0xba4429dc118e02de8c1f33851643694e431012290672fb0bb70ba95e3b9f4b53"
+my_address = "0x63094D96A0aCE0121a540ff680459e8233512727"
+private_key = os.getenv("PRIVATE_KEY")
 
 # 6. Creating contract
 mvp_contract = w3.eth.contract(abi=abi, bytecode=bytecode)
 
-# 7. Get number of transactions
+# 7. Get number of transactions, put into nonce
 nonce = w3.eth.getTransactionCount(my_address)
 
-#8. Deploy contract
+# 8. Create transaction
 transaction = mvp_contract.constructor().buildTransaction({
     "gasPrice": w3.eth.gas_price, 
     "chainId": chain_id,
@@ -58,4 +61,13 @@ transaction = mvp_contract.constructor().buildTransaction({
     "nonce": nonce
 })
 
-print(transaction)
+# 9. Sign transaction
+signed_transaction = w3.eth.account.sign_transaction(transaction, private_key=private_key)
+
+# 10. Send transaction
+transaction_hash = w3.eth.send_raw_transaction(signed_transaction.rawTransaction)
+
+# 11. Wait for confirmation
+transaction_receipt = w3.eth.get_transaction_receipt(transaction_hash)
+
+print(transaction_receipt)

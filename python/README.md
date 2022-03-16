@@ -1,3 +1,5 @@
-## Learn web3.py
+# Directory
 
-These are files from video https://youtu.be/M576WGiDBdQ?t=12408
+## [./mvp](./mvp/)
+
+MVP from creating a solidity contract, all the way to deploying it to a local chain using Web3.py and Ganache.
