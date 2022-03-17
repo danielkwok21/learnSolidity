@@ -37,9 +37,9 @@ bytecode = compiled_sol["contracts"]["mvp.sol"]["MVP"]["evm"]["bytecode"]["objec
 abi = compiled_sol["contracts"]["mvp.sol"]["MVP"]["abi"]
 
 # ganache params
-w3 = Web3(Web3.HTTPProvider("http://127.0.0.1:7545"))
+w3 = Web3(Web3.HTTPProvider("http://127.0.0.1:8545"))
 chain_id = 1337
-my_address = "0x63094D96A0aCE0121a540ff680459e8233512727"
+my_address = "0x8BA8ab7a79584E8d765dAD7A98ad266d22fE5411"
 private_key = os.getenv("PRIVATE_KEY")
 
 # create transaction
