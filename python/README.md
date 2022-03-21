@@ -10,4 +10,7 @@ How to interact with a deployed contract using python.
 Introduction to `call()`
 
 ## [./interact_with_contract_on_testnet](./interact_with_contract_on_testnet/)
-How to deploy + interact contract to testnet using Infura
+How to deploy + interact contract to testnet using Infura.
+
+## [./brownie/](./brownie/)
+A library built on top of web3.py and ganache to make things easier.
