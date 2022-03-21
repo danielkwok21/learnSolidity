@@ -15,16 +15,13 @@ $ yarn add -g ganache
 ```
 
 ## Getting started
-1. Initialize a new brownie project in a new directory called "mvp"
+1. Initialize a new brownie project in a new directory called "mvp" and cd into it
 ```bash
 $ brownie init mvp
-```
-2. cd into newly created directory
-```bash
 $ cd mvp
 ```
 
-3. Create a solidity contract file in [./mvp/contracts/](./mvp/contracts/). 
+2. Create a solidity contract file in [./mvp/contracts/](./mvp/contracts/). 
 
 ## Compile contract
 ```bash
@@ -68,4 +65,17 @@ $ brownie accounts list
 3. Run script
 ```bash
 $ brownie run scripts/deploy_w_own_account.py
+```
+
+## Testing
+1. Write tests in [./mvp/tests/](./mvp/tests/).
+2. Test file must be named test_*.py. E.g. test_mvp.py, test_blablabla.py
+3. Run test with
+```bash
+# Run all test
+$ brownie test
+
+# Run a particular test case only
+# $ brownie test -k <test-name>
+$ brownie test -k test_default_value()
 ```
