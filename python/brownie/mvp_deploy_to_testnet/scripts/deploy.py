@@ -1,6 +1,6 @@
 # 1. Import accounts and MVP from brownie
 # accounts is the list of 10 dummy accounts provided by brownie
-# MVP is the compiled solidity contract. Can be found in ../contracts/mvp.sol
+# MVP is an array of deployed solidity contract. MVP[-1] to get latest deployment
 from brownie import accounts, MVP
 
 def main():
@@ -9,7 +9,7 @@ def main():
 
 def deploy_local_with_own_account():
     # Where is "dev_account1" coming from?
-    # Make sure to read through README#deploy-contract-to-testnet first
+    # Make sure to read through README#deploy-contract-to-test-net-with-own-account first
     account = accounts.load("dev_account1")
     print(f"Account selected: {account}")
     

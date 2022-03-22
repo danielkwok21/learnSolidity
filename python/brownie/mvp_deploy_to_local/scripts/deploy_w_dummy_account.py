@@ -1,6 +1,6 @@
 # 1. Import accounts and MVP from brownie
 # accounts is the list of 10 dummy accounts provided by brownie
-# MVP is the compiled solidity contract. Can be found in ../contracts/mvp.sol
+# MVP is an array of deployed solidity contract. MVP[-1] to get latest deployment
 from brownie import accounts, MVP
 
 def main():

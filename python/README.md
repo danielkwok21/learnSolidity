@@ -1,16 +1,8 @@
 # Directory
 
-## [./mvp](./mvp/)
-
-MVP for compiling, creating, signing,
-and deploying transaction to a local chain using Web3.py and Ganache.
-
-## [./interact_with_contract](./interact_with_contract)
-How to interact with a deployed contract using python.
-Introduction to `call()`
-
-## [./interact_with_contract_on_testnet](./interact_with_contract_on_testnet/)
-How to deploy + interact contract to testnet using Infura.
+## [./web3py](./web3py)
+How to compile, deploy, and generally work with contracts via Web3.py & ganache.
 
 ## [./brownie/](./brownie/)
+How to compile, deploy, and generally work with contracts via brownie.
 A library built on top of web3.py and ganache to make things easier.

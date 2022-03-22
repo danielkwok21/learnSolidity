@@ -2,7 +2,7 @@
 Reference video timestamp: https://youtu.be/M576WGiDBdQ?t=17951
 
 ## What is this
-How to get a deployed contract and interact with it
+How to get a deployed contract and interact with it with brownie + infura
 
 ## Prerequisites
 1. Install dependencies
