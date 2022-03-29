@@ -84,11 +84,16 @@ $ brownie networks list
 3. Run script, but specify `--network` param with `rinkeby` value, as that's the testnet we're deploying to. At the time of writing, this was the transaction: https://rinkeby.etherscan.io/address/0x9aCAb41b3729BE63e181625392bA8f95D0F2A5e1
 ```bash
 $ brownie run scripts/read_value_from_testnet_contract.py --network rinkeby
-
     Brownie v1.18.1 - Python development framework for Ethereum
 
     MvpGetFromTestnetProject is the active project.
 
     Running 'scripts/read_value_from_testnet_contract.py::main'...
-    [Logger] hello world!
+    Enter password for "dev_account1": 
+    [Logger] old_greeting: goodbye, world
+    Transaction sent: 0x06e3585b8ccf652cb6130b6455948bf328afa5fce387e9aac4077d33b32faff2
+    Gas price: 1.000012883 gwei   Gas limit: 30549   Nonce: 34
+    MVP.setGreeting confirmed   Block: 10410223   Gas used: 27772 (90.91%)
+
+    [Logger] new_greeting: goodbye, world
 ```
