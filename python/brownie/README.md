@@ -11,5 +11,5 @@ This example is built on top of [../mvp_deploy_to_local/](../mvp_deploy_to_local
 How to get a deployed contract and interact with it with brownie + infura
 
 ## [./fundme](./fundme/)
-How to write fundable contracts in brownie
+How to write fundable contracts in brownie<br/>
 How to publish sourcecode to testnet
