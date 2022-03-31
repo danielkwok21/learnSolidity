@@ -13,3 +13,6 @@ How to get a deployed contract and interact with it with brownie + infura
 ## [./fundme](./fundme/)
 How to write fundable contracts in brownie<br/>
 How to publish sourcecode to testnet
+
+## [./useDependency](./useDependency/)
+How to install & use dependencies with brownie.
