@@ -1,3 +1,0 @@
-dotenv: .env
-dependencies:
-  - smartcontractkit/chainlink@1.2.1

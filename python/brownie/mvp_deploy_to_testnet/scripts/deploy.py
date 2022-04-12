@@ -4,10 +4,10 @@
 from brownie import accounts, MVP
 
 def main():
-    deploy_local_with_own_account()
+    deploy_testnet_with_own_account()
 
 
-def deploy_local_with_own_account():
+def deploy_testnet_with_own_account():
     # Where is "dev_account1" coming from?
     # Make sure to read through README#deploy-contract-to-test-net-with-own-account first
     account = accounts.load("dev_account1")
