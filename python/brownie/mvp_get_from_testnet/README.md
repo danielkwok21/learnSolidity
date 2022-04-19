@@ -1,5 +1,6 @@
 # Brownie, on testnet
-Reference video timestamp: https://youtu.be/M576WGiDBdQ?t=17951
+Reference video timestamp: https://youtu.be/M576WGiDBdQ?t=17967
+Documentation: https://eth-brownie.readthedocs.io/en/stable/core-contracts.html#persisting-contracts-between-sessions
 
 ## What is this
 How to get a deployed contract and interact with it with brownie + infura
