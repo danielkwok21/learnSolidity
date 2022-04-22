@@ -43,13 +43,6 @@ def main():
     # 6. Review how much we've borrowed, and how much more left we can borrow
     print_account_info(lending_pool, account)
 
-    # 7. Repay all we've borrowed
-    #    Comment this out to see difference in value, else it'll go back to the previous value.
-    repay_borrowed(dai_addr, borrowable_dai_in_wei, lending_pool, account)
-
-    # 8. Review how much we've borrowed, and how much more left we can borrow
-    print_account_info(lending_pool, account)
-
 
 # More info at https://docs.aave.com/developers/v/2.0/the-core-protocol/lendingpool#borrow
 def borrow(amount_in_wei, lending_pool, asset_addr, account):
@@ -74,6 +67,7 @@ def deposit(amount, lending_pool, asset_addr, account):
     return tx
 
 
+# Optional
 # More info at https://docs.aave.com/developers/v/2.0/the-core-protocol/lendingpool#repay
 def repay_borrowed(asset_addr, amount, lending_pool, account):
     logger("repay_borrowed...")

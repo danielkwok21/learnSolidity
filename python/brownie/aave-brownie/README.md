@@ -37,68 +37,54 @@ Follow video. Too lengthy to add into readme.
 - aave_borrow.py is the main focus of this project
 
 
+## Run on mainnet fork
+Keep in mind `mainnet-fork-dev` is our personally forked mainnet. Refer to [mvp_deploy_to_forked_network](../mvp_deploy_to_forked_network/).
+
+No need to run [scripts/get_weth.py](./scripts/get_weth.py) as there is no way to get weth for an account before hand, as accounts are generated on-the-fly in mainnet-fork-dev
+
+
+Simply run [scripts/aave_borrow.py](./scripts/aave_borrow.py). Details of what's happening is in the script. 
+```bash
+$ brownie run scripts/aave_borrow.py --network mainnet-fork-dev
+```
+
+
 ## Run on kovan
-1. Convert some eth into weth
+All following operation takes place in real, live, Kovan testnet. Hence all operations can be observed from etherscan, metamask, and aave itself.
+
+Kovan etherscan - https://kovan.etherscan.io/
+
+AAVE - https://staging.aave.com/?marketName=proto_kovan
+
+1. Convert some eth into weth. Observe decrease in ETH and increase in WETH.
 ```bash
 $ brownie run scripts/get_weth.py --network kovan
 ```
 Before:
 
-<img loading="lazy" src="https://i.ibb.co/qpTmSGm/Whats-App-Image-2022-04-22-at-1-06-48-PM.jpg" width=300>
+<img loading="lazy" src="https://i.ibb.co/7pQtNyw/1.png" width=600>
 
 After: 
 
-<img loading="lazy" src="https://i.ibb.co/nBNBC09/Whats-App-Image-2022-04-22-at-1-07-13-PM.jpg" width=300 >
+<img loading="lazy" src="https://i.ibb.co/qrjqfCs/2.png" width=600 >
 
-2. Comment out `repay` function call in [./scripts/aave_borrow.py](./scripts/aave_borrow.py) to avoid repaying, so we can see the difference in account balance.
+2. Run [./scripts/aave_borrow.py](./scripts/aave_borrow.py) script. Details of what's happening is in the script. Observe dercrease in WETH and increase in DAI
 
-```diff
-# scripts/aave_borrow.py
--   # 7. Repay all we've borrowed
--   #    Comment this out to see difference in value, else it'll go back to the previous value.
--    repay(borrowable_dai_in_wei, lending_pool, dai_addr, account)
-
-+    # # 7. Repay all we've borrowed
-+    # #    Comment this out to see difference in value, else it'll go back to the previous value.
-+    # repay(borrowable_dai_in_wei, lending_pool, dai_addr, account)
-
-
-```
-
-3. Run [./scripts/aave_borrow.py](./scripts/aave_borrow.py) script. Details of what's happening is in the script.
 ```bash
 $ brownie run scripts/aave_borrow.py --network kovan
 ```
 
 Before:
 
-<img loading="lazy" src="https://i.ibb.co/nBNBC09/Whats-App-Image-2022-04-22-at-1-07-13-PM.jpg" width=300 >
+<img loading="lazy" src="https://i.ibb.co/qrjqfCs/2.png" width=600 >
 
 After:
 
+<img loading="lazy" src="https://i.ibb.co/sQKydcF/3.png" width=600>
 
+## FAQ
+Q: How to repay all borrowed tokens?
 
+A: Head to https://staging.aave.com/?marketName=proto_kovan. Click "Repay" on borrowed asset.
 
-
-## Deploy on mainnet fork
-Keep in mind `mainnet-fork-dev` is our personally forked mainnet. Refer to [mvp_deploy_to_forked_network](../mvp_deploy_to_forked_network/)
-```bash
-$ brownie run scripts/aave_borrow.py --network mainnet-fork-dev
-
-Brownie v1.18.1 - Python development framework for Ethereum
-
-AaveBrownieProject is the active project.
-
-Launching 'ganache-cli --chain.vmErrorsOnRPCResponse true --wallet.totalAccounts 10 --fork.url https://eth-mainnet.alchemyapi.io/v2/JdZ0wCrRKW35uVyocix2HijVLnsiIb2Q --wallet.mnemonic brownie --server.port 8545 --hardfork istanbul'...
-
-Running 'scripts/aave_borrow.py::main'...
-Transaction sent: 0xc6e2d2fa462aa8886da9bc132d031a6fdf4eab81b02b87aaf413b89ccdef8bd7
-  Gas price: 0.0 gwei   Gas limit: 30000000   Nonce: 2
-  Transaction confirmed   Block: 14621001   Gas used: 43738 (0.15%)
-
-  Transaction confirmed   Block: 14621001   Gas used: 43738 (0.15%)
-
-[Logger 17:07:44] Received 0.01 weth
-Terminating local RPC client...
-
-```
+<img loading="lazy" src="https://i.ibb.co/bRtJ9FB/Whats-App-Image-2022-04-22-at-5-18-43-PM.jpg" width=600>
