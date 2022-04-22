@@ -8,13 +8,14 @@ def main():
 
 def get_weth():
     account = get_account()
-    amount = Web3.toWei(0.01, "ether")
+    amount_in_eth = 0.01
+    amount_in_wei = Web3.toWei(amount_in_eth, "ether")
   
     weth_address = config["networks"][network.show_active()]["weth_token"]
     weth = interface.IWeth(weth_address)
-    tx = weth.deposit({"from": account, "value": amount})
+    tx = weth.deposit({"from": account, "value": amount_in_wei})
     tx.wait(1)
-    logger(f"Received 0.01 weth")
+    logger(f"Received {amount_in_eth}wei of weth")
 
 def logger(message):
     t = time.localtime()

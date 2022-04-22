@@ -4,6 +4,7 @@ from brownie import network, config, interface
 from web3 import Web3
 import time
 
+
 def main():
     account = get_account()
     wei_to_deposit = Web3.toWei(0.001, "ether")
@@ -25,18 +26,18 @@ def main():
     borrowable_eth = get_borrowable_eth(lending_pool, account)
 
     # 3. Get conversion rate of dai -> eth. PS no eth -> dai price feed exists
-    dai_to_eth_pricefeed_addr = config["networks"][network.show_active(
+    dai_to_ether_pricefeed_addr = config["networks"][network.show_active(
     )]["dai_to_eth_pricefeed"]
-    dai_to_eth_price = get_asset_price_in_eth(dai_to_eth_pricefeed_addr)
+    dai_to_ether_price = get_asset_price_in_eth(dai_to_ether_pricefeed_addr)
 
     # 4. Calculate amount of dai we can borrow
     #    Set limit to be 95%, so we have a buffer of 5%
     limit = 0.95
-    borrowable_dai_in_eth = borrowable_eth / dai_to_eth_price * limit
-    logger(f"borrowable_dai_in_eth={borrowable_dai_in_eth}")
+    borrowable_dai_in_eth = (borrowable_eth / dai_to_ether_price) * limit
+    borrowable_dai_in_wei = Web3.toWei(borrowable_dai_in_eth, "ether")
+    logger(f"borrowable_dai_in_wei={borrowable_dai_in_wei}")
 
     # 5. Borrow dai
-    borrowable_dai_in_wei = Web3.toWei(borrowable_dai_in_eth, "ether")
     borrow(borrowable_dai_in_wei, lending_pool, dai_addr, account)
 
     # 6. Review how much we've borrowed, and how much more left we can borrow
@@ -44,7 +45,7 @@ def main():
 
     # 7. Repay all we've borrowed
     #    Comment this out to see difference in value, else it'll go back to the previous value.
-    repay(borrowable_dai_in_wei, lending_pool, dai_addr, account)
+    repay_borrowed(dai_addr, borrowable_dai_in_wei, lending_pool, account)
 
     # 8. Review how much we've borrowed, and how much more left we can borrow
     print_account_info(lending_pool, account)
@@ -74,14 +75,14 @@ def deposit(amount, lending_pool, asset_addr, account):
 
 
 # More info at https://docs.aave.com/developers/v/2.0/the-core-protocol/lendingpool#repay
-def repay(amount, lending_pool, asset_addr, account):
-    logger("repay_all...")
-    rate_mode = 0
+def repay_borrowed(asset_addr, amount, lending_pool, account):
+    logger("repay_borrowed...")
+    rate_mode = 1
     approve_tx(amount, lending_pool, asset_addr, account)
     tx = lending_pool.repay(asset_addr, amount, rate_mode,
                             account.address, {"from": account})
     tx.wait(1)
-    logger("...repay_all")
+    logger("...repay_borrowed")
 
 
 # Get conversion rate of any asset, based on pricefeed address provided
@@ -92,29 +93,33 @@ def get_asset_price_in_eth(address):
         _, price_in_wei, _, _, _,
     ) = dai_eth_price_feed.latestRoundData()
 
-    price_in_eth = Web3.fromWei(price_in_wei, "ether")
+    price_in_eth = float(Web3.fromWei(price_in_wei, "ether"))
 
     logger(f'...get_asset_price_in_eth. price_in_eth={price_in_eth}')
 
-    return float(price_in_wei)
+    return price_in_eth
 
 
 # More info at https://docs.aave.com/developers/v/2.0/the-core-protocol/lendingpool#getuseraccountdata
 def print_account_info(lending_pool, account):
     logger('print_account_info...')
     (
-        _,
+        total_collateral_wei,
         total_debt_wei,
         borrowable_wei,
-        _,
-        _,
+        current_liq_threadhold,
+        ltv,
         health_factor
     ) = lending_pool.getUserAccountData(account.address, {"from": account})
-    
-    total_debt_eth = Web3.fromWei(total_debt_wei, "ether")
-    borrowable_eth = Web3.fromWei(borrowable_wei, "ether")
 
-    logger(f'...print_account_info. borrowable_eth={borrowable_eth} total_debt_eth={total_debt_eth} health_factor={health_factor}')
+    logger(f"total_collateral_wei={total_collateral_wei}")
+    logger(f"total_debt_wei={total_debt_wei}")
+    logger(f"borrowable_wei={borrowable_wei}")
+    logger(f"current_liq_threadhold={current_liq_threadhold}")
+    logger(f"ltv={ltv}")
+    logger(f"health_factor={health_factor}")
+
+    logger(f'...print_account_info.')
 
 
 # More info at https://docs.aave.com/developers/v/2.0/the-core-protocol/lendingpool#getuseraccountdata
@@ -155,7 +160,7 @@ def get_lending_pool():
     logger('get_lending_pool...')
 
     lending_pool_address_provider_addr = config["networks"][network.show_active(
-    )]["lending_pool_addres_provider"]
+    )]["lending_pool_addresses_provider"]
     lending_pool_address_provider = interface.ILendingPoolAddressesProvider(
         lending_pool_address_provider_addr)
 

@@ -1,78 +1,84 @@
 # Interacting with AAVE using brownie
-Video: https://youtu.be/M576WGiDBdQ?t=31685
+Video timestamp: https://youtu.be/M576WGiDBdQ?t=31685
 
 ## What is this
 Interacting with aave with a list of actions
-1. Deposit some eth into aave
-2. Borrow some asset with ETH collateral
+0. Convert some ethereum into weth
+1. Deposit weth into aave
+2. Borrow dei with depositted weth
 3. Repay everything
 
 ## Prerequisites
-1. Uses kovan test net, i.e. need credits in account in kovan
+1. Uses kovan testnet. Would need credits in account in kovan.
+2. Import WETH and DAI token into acccount in kovan. This would allow us to view changes from metamask directly, rather than having to go to etherscan.
+
+<!-- <img src="https://i.ibb.co/hX09TPJ/Whats-App-Image-2022-04-22-at-11-18-10-AM.jpg" height=400> -->
 
 
 ## Steps
-### Setting up WETH contract
+Follow video. Too lengthy to add into readme.
 
-- Doc at https://docs.aave.com/developers/v/2.0/the-core-protocol/weth-gateway
-- Interface source codes at https://github.com/aave/protocol-v2/blob/master/contracts/misc
-- AAVE contract addresses at https://docs.aave.com/developers/v/2.0/deployed-contracts/deployed-contracts
+## Important files and directories
+[./scripts/aave_borrow.py](./scripts/aave_borrow.py)
+- Main focus of this project
 
-1. Create [IWeth.sol](./interfaces/IWeth.sol) under [interfaces](./interfaces/) according to interface specifed in https://github.com/PatrickAlphaC/aave_brownie_py/blob/main/interfaces/WethInterface.sol (Where did PatrickAlphaC got this interface from?)
+[./brownie-config.yaml](./brownie-config.yaml)
 
-2. Specify kovan's WETH token's address in [brownie-config.yaml](./brownie-config.yaml) based on https://kovan.etherscan.io/token/0xd0a1e359811322d97991e03f863a0c30c2cf029c
+- Storing configurations. Specifically network-specific addresses, and wallet address
 
-    brownie-config.yaml
-    ```diff
-    +   networks:
-    +       kovan:
-    +           weth_token: '0xd0a1e359811322d97991e03f863a0c30c2cf029c'
-    ```
+[./interfaces](./interfaces/)
+- To interact with deployed contracts, we need interface + address. Here is where we store the interfaces.
 
-3. Specify mainnet's WETH token's address in [brownie-config.yaml](./brownie-config.yaml) based on https://etherscan.io/token/0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2 (will be useful when testing in mainnet fork)
+[./contracts](./contracts/)
+- Unlike previos projects, all contracts used here are already deployed. So this directory will be empty
 
-    brownie-config.yaml
-    ```diff
-    networks:
-        kovan:
-            weth_token: '0xd0a1e359811322d97991e03f863a0c30c2cf029c'
-    +   mainnet-fork:
-    +       weth_token: + '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2'
+[./scripts](./scripts)
+- get_weth.py provides weth to specified account
+- aave_borrow.py is the main focus of this project
 
-    ```
 
-### Additional configs
-
-1. Specify wallet address, to interact with aave with our account's contract
-
-    brownie-config.yaml
-    ```diff
-    networks:
-    kovan:
-        weth_token: '0xd0a1e359811322d97991e03f863a0c30c2cf029c'
-    +   wallets:
-    +       from_key: ${PRIVATE_KEY}
-
-    ```
-
-## Deploy on kovan
+## Run on kovan
+1. Convert some eth into weth
 ```bash
 $ brownie run scripts/get_weth.py --network kovan
+```
+Before:
 
-Brownie v1.18.1 - Python development framework for Ethereum
+<img loading="lazy" src="https://i.ibb.co/qpTmSGm/Whats-App-Image-2022-04-22-at-1-06-48-PM.jpg" width=300>
 
-AaveBrownieProject is the active project.
+After: 
 
-Running 'scripts/get_weth.py::main'...
-Transaction sent: 0xf9c0f7c9dbdb4098412b4fefeb2b879936efadb57e4ecd9353851ebef2cde69d
-  Gas price: 2.500000007 gwei   Gas limit: 49572   Nonce: 0
-  Transaction confirmed   Block: 31124816   Gas used: 45066 (90.91%)
+<img loading="lazy" src="https://i.ibb.co/nBNBC09/Whats-App-Image-2022-04-22-at-1-07-13-PM.jpg" width=300 >
 
-[Logger 09:54:56] Received 0.01 weth
+2. Comment out `repay` function call in [./scripts/aave_borrow.py](./scripts/aave_borrow.py) to avoid repaying, so we can see the difference in account balance.
+
+```diff
+# scripts/aave_borrow.py
+-   # 7. Repay all we've borrowed
+-   #    Comment this out to see difference in value, else it'll go back to the previous value.
+-    repay(borrowable_dai_in_wei, lending_pool, dai_addr, account)
+
++    # # 7. Repay all we've borrowed
++    # #    Comment this out to see difference in value, else it'll go back to the previous value.
++    # repay(borrowable_dai_in_wei, lending_pool, dai_addr, account)
+
 
 ```
-<img src="https://i.ibb.co/qR1g77x/untitled.png" height=200 >
-(Need to import WETH token beforehand)
+
+3. Run [./scripts/aave_borrow.py](./scripts/aave_borrow.py) script. Details of what's happening is in the script.
+```bash
+$ brownie run scripts/aave_borrow.py --network kovan
+```
+
+Before:
+
+<img loading="lazy" src="https://i.ibb.co/nBNBC09/Whats-App-Image-2022-04-22-at-1-07-13-PM.jpg" width=300 >
+
+After:
+
+
+
+
 
 ## Deploy on mainnet fork
 Keep in mind `mainnet-fork-dev` is our personally forked mainnet. Refer to [mvp_deploy_to_forked_network](../mvp_deploy_to_forked_network/)
